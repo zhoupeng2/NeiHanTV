@@ -1,0 +1,81 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    useLibrary 'org.apache.http.legacy'
+    defaultConfig {
+        applicationId "com.zp.neihan"
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    //recommend
+    dexOptions {
+        jumboMode = true
+    }
+    signingConfigs {
+        release {
+            try {
+                keyAlias 'pitaya'
+                keyPassword '123456'
+                storeFile file('E:/ZhouPeng/ASYuanMa/ASYuanMa/pitaya_project/pitaya.jks')
+                storePassword '123456'
+            } catch (ex) {
+                throw new InvalidUserDataException(ex.toString())
+            }
+        }
+
+        /*  debug {
+              try {
+                  keyAlias 'pitaya'
+                  keyPassword '123456'
+                  storeFile file('E:/ZhouPeng/ASYuanMa/ASYuanMa/pitaya_project/pitaya.jks')
+                  storePassword '123456'
+              } catch (ex) {
+                  throw new InvalidUserDataException(ex.toString())
+              }
+          }*/
+    }
+
+    buildTypes {
+        release {
+            /**
+             * 开启混淆时，tinker才会生成 mapping.txt类，自己在 app/ 目录下创建一个mapping.txt文件
+             */
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+
+    implementation 'com.squareup.okhttp3:okhttp:3.7.0'
+
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.google.code.gson:gson:2.2.4'
+
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    /**
+     * SmartRefreshLayout
+     */
+    implementation 'com.android.support:design:27.1.1'//版本随意（非必须，引用可以解决无法预览问题）
+    implementation 'com.android.support:appcompat-v7:27.1.1'//版本随意
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4'//没有使用特殊Header，可以不加这行
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}

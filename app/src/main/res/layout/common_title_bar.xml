@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/common_layout1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+    <!-- 顶部的titleBar-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--沉浸式activity，这个view是用来占位的-->
+
+        <View
+            android:id="@+id/chenjin_view"
+            android:layout_width="1px"
+            android:layout_height="1px" />
+
+        <RelativeLayout
+            android:id="@+id/rl_hotnotice_top"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_below="@+id/chenjin_view">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dip"
+                android:layout_alignParentBottom="true"
+                android:background="#E0E3E5" />
+
+            <ImageView
+                android:id="@+id/img_common_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                android:padding="10dip"
+                android:src="@drawable/ic_back_btn_black" />
+
+            <TextView
+                android:id="@+id/txt_common_title"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center_horizontal"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:text="公共标题"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/iv_onekeyshare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/common_share"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txt_common_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="6dp"
+                android:padding="10dip"
+                android:text="记录"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+
+        </RelativeLayout>
+
+        <!--沉浸式activity，如果沉浸背景是白色的，此view显示-->
+        <View
+            android:id="@+id/background_if_is_white_view"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#20000000"
+            android:visibility="gone" />
+    </RelativeLayout>
+</RelativeLayout>
