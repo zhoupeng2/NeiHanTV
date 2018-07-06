@@ -29,6 +29,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/txt_duanzi_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lineSpacingExtra="3dp"
@@ -39,6 +40,7 @@
         android:textSize="17dp" />
 
     <RelativeLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
@@ -84,6 +86,29 @@
             android:lineSpacingExtra="3dp"
             android:text="梅西和C罗说：“机票都帮你买好了，就等你了。”"
             android:textSize="15dp" />
+
+
+        <TextView
+            android:id="@+id/tv_dianzan_cisu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="12dp"
+            android:text="2671"
+            android:textSize="14dp" />
+
+        <ImageView
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_marginLeft="16dp"
+
+            android:layout_marginTop="12dp"
+            android:layout_toLeftOf="@+id/tv_dianzan_cisu"
+            android:src="@drawable/ic_praise" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -207,4 +232,9 @@
                 android:src="@drawable/sharedseletor" />
         </RelativeLayout>
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#F7F7F7" />
 </LinearLayout>

@@ -45,9 +45,10 @@ public abstract class MapCallback extends Callback<Map<String, Object>> {
 		// TODO Auto-generated method stub
 		this.response = response;
 		Log.d("xxx",response+"");
-		String end = (String) response.get("end");
-		String message = (String) response.get("message");
-
+		String end = (String) response.get("status");
+		//String message = (String) response.get("message");
+		int  current_page= (int) response.get("current_page");
+		String message =  "current_page："+current_page;
 		if ("ok".equals(end)) {
 			OKResult(response);
 		} else if ("error".equals(end)) {
