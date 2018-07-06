@@ -12,4 +12,11 @@
     <style name="CircularProgress" parent="Theme.AppCompat.Light">
         <item name="colorAccent">@color/hongse2</item>
     </style>
+
+    <style name="Theme.MyAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@drawable/ic_splash</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
 </resources>

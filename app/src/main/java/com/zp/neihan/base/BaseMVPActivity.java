@@ -381,6 +381,10 @@ public abstract class BaseMVPActivity<V, T extends BasePresenter<V>> extends App
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
+        /**
+         * 给 MVP的View层 置空
+         */
         mPresenter.detachView();
+
     }
 }

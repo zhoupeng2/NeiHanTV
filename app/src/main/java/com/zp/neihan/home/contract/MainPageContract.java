@@ -1,28 +1,28 @@
-package com.zp.neihan.splash.contract;
+package com.zp.neihan.home.contract;
 
 import android.content.Context;
 
 import com.zp.neihan.base.BaseMVPView;
 import com.zp.neihan.base.BasePresenter;
+import com.zp.neihan.home.model.MainPageModel;
+import com.zp.neihan.splash.contract.SplashContract;
 import com.zp.neihan.splash.model.SplashModel;
 
 /**
- * @author ZhouPeng
- * @Copyright HangZhou XCM Technology Co., Ltd.
- * @CreatedDate 2018/7/4
+ * @author ZP
+ * @CreatedDate 2018/7/6
  */
-public interface SplashContract {
-
-    public static class SplashPresenter extends BasePresenter<SplashView> {
+public interface MainPageContract {
+    public static class MainPagePresenter extends BasePresenter<MainPageContract.MainPageView> {
         public void getUserInfo(String uid, Context context) {
             /**
              * TODO 1 调用 Model获取数据
              */
-            SplashModel splashModel = new SplashModel();
+            MainPageModel splashModel = new MainPageModel();
             /**
              * 模拟通过用户Id查询用户信息
              */
-            String userInfo = splashModel.getUserInfo(uid);
+            String userInfo = splashModel.selectUserInfoById(uid);
             /**
              * TODO 2 填充 数据
              */
@@ -31,8 +31,8 @@ public interface SplashContract {
 
     }
 
-    public interface SplashView extends BaseMVPView {
-        void setDataToView(String uid);
+    public interface MainPageView extends BaseMVPView {
+        void setDataToView(String userInfo);
     }
 
 }

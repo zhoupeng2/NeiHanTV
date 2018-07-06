@@ -1,56 +1,87 @@
 package com.zp.neihan.splash.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.os.Handler;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.zp.neihan.R;
-import com.zp.neihan.base.BaseMVPActivity;
-import com.zp.neihan.splash.contract.SplashContract;
+import com.zp.neihan.home.ui.activity.MainActivity;
+
+import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * @author ZhouPeng
  * @Copyright HangZhou XCM Technology Co., Ltd.
  * @CreatedDate 2018/7/4
  */
-public class SplashActivity extends BaseMVPActivity<SplashContract.SplashView, SplashContract.SplashPresenter> implements SplashContract.SplashView {
+public class SplashActivity extends AppCompatActivity {
+    private Unbinder bind;
 
-    @BindView(R.id.txt_splash)
-    TextView txtSplash;
+    @BindView(R.id.img_splash_advertising)
+    ImageView imgSplashAdvertising;
+    @BindView(R.id.img_splash_defult)
+    ImageView imgSplashDefult;
+
+    private WeakReference<ImageView> ivDefultPicWeakReference;
+    private WeakReference<ImageView> imgSplashAdvertisingWeakReference;
 
     @Override
-    protected int setLayoutId() {
-        return R.layout.activity_splash;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
+        bind = ButterKnife.bind(this);
+
+        /**
+         * 活动图
+         */
+        Glide.with(this)
+                .load("http://ojyz0c8un.bkt.clouddn.com/b_1.jpg")
+                .placeholder(R.drawable.ic_splash)
+                .error(R.drawable.ic_splash)
+                .into(imgSplashAdvertising);
+
+
+        ivDefultPicWeakReference = new WeakReference<ImageView>(imgSplashDefult);
+        imgSplashAdvertisingWeakReference= new WeakReference<ImageView>(imgSplashAdvertising);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (ivDefultPicWeakReference != null) {
+                    ivDefultPicWeakReference.get().setVisibility(View.GONE);
+                    imgSplashAdvertisingWeakReference.get().setVisibility(View.VISIBLE);
+                }
+            }
+        }, 1500);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                  toMainActivity();
+            }
+        }, 3500);
+
+    }
+
+    private void toMainActivity() {
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
-    protected void initView() {
-        showLoadingView();
-        mPresenter.getUserInfo("9527");
-        customShowCotentView(1500);
+    protected void onDestroy() {
+        super.onDestroy();
+        bind.unbind();
     }
-
-    @Override
-    protected void initLogic(Bundle savedInstanceState) {
-
-
-    }
-
-    @Override
-    protected void initEvent() {
-
-    }
-
-    @Override
-    protected SplashContract.SplashPresenter createPresenter() {
-        return new SplashContract.SplashPresenter();
-    }
-
-    @Override
-    public void setDataToView(String uid) {
-        txtSplash.setText(uid);
-    }
-
 }

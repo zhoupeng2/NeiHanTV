@@ -1,23 +1,37 @@
 package com.zp.neihan.home.ui.fragment;
 
+
+import android.widget.TextView;
+
+import com.zp.neihan.R;
 import com.zp.neihan.base.BaseMVPFragment;
-import com.zp.neihan.base.BasePresenter;
+import com.zp.neihan.home.contract.MainPageContract;
+
+import butterknife.BindView;
 
 /**
- * @author ZhouPeng
- * @Copyright HangZhou XCM Technology Co., Ltd.
  * @CreatedDate 2018/7/3
  */
-public class MainPageFrament extends BaseMVPFragment{
+public class MainPageFrament extends BaseMVPFragment<MainPageContract.MainPageView, MainPageContract.MainPagePresenter> implements MainPageContract.MainPageView {
+
+    @BindView(R.id.tv_mainpage)
+    TextView tvMainpage;
+    private MainPageContract.MainPagePresenter mainPagePresenter;
+
+    public static MainPageFrament newInstance() {
+        return new MainPageFrament();
+    }
 
     @Override
     protected int setContentViewId() {
-        return 0;
+        return R.layout.fragment_main_page;
     }
 
     @Override
     protected void initView() {
-
+       showLoadingView();
+        mainPagePresenter.getUserInfo("9527",getActivity());
+       customShowCotentView(800);
     }
 
     @Override
@@ -31,7 +45,14 @@ public class MainPageFrament extends BaseMVPFragment{
     }
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected MainPageContract.MainPagePresenter createPresenter() {
+        mainPagePresenter= new MainPageContract.MainPagePresenter();
+        return mainPagePresenter;
     }
+
+    @Override
+    public void setDataToView(String userInfo) {
+        tvMainpage.setText(userInfo);
+    }
+
 }
