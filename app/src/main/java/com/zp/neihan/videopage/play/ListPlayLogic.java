@@ -88,6 +88,8 @@ public class ListPlayLogic {
     }
 
     public void playPosition(int position) {
+
+
         VideoBean item = getItem(position);
         DataSource dataSource = new DataSource(item.getPath());
         dataSource.setTitle(item.getDisplayName());
