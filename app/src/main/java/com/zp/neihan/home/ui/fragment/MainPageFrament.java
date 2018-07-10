@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zp.neihan.R;
 import com.zp.neihan.base.BaseMVPFragment;
 import com.zp.neihan.home.adapter.MainPageDuanZiAdapter;
@@ -28,12 +32,19 @@ public class MainPageFrament extends BaseMVPFragment<MainPageContract.MainPageVi
 
     @BindView(R.id.recycler_view_duanzi)
     RecyclerView recyclerViewDuanzi;
+    @BindView(R.id.smart_refresh_layout_duanzi)
+    SmartRefreshLayout duanZiSmartRefreshLayout;
 
     Unbinder unbinder;
     private MainPageContract.MainPagePresenter mainPagePresenter;
     private LinearLayoutManager linearLayoutManager;
     private MainPageDuanZiAdapter mainPageDuanZiAdapter;
 
+    private int currentPage = 1;
+    /**
+     * 是否是第一次刷新
+     */
+    private boolean isFristRefresh = true;
 
     public static MainPageFrament newInstance() {
         return new MainPageFrament();
@@ -47,7 +58,7 @@ public class MainPageFrament extends BaseMVPFragment<MainPageContract.MainPageVi
     @Override
     protected void initView() {
         showLoadingView();
-        mainPagePresenter.selectDataFromJianDan(1);
+      mainPagePresenter.selectDataFromJianDan(currentPage,isFristRefresh);
         customShowCotentView(800);
     }
 
@@ -59,6 +70,26 @@ public class MainPageFrament extends BaseMVPFragment<MainPageContract.MainPageVi
     @Override
     protected void initEvent() {
 
+        isFristRefresh=false;
+
+        duanZiSmartRefreshLayout.setDisableContentWhenRefresh(true);//是否在刷新的时候禁止列表的操作
+        duanZiSmartRefreshLayout.setDisableContentWhenLoading(true);//是否在加载的时候禁止列表的操作
+        duanZiSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                currentPage = 1;
+                mainPagePresenter.selectDataFromJianDan(currentPage, isFristRefresh);
+                //  refreshlayout.finishRefresh(/*,false*/);//传入false表示刷新失败
+            }
+        });
+        duanZiSmartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                //   refreshlayout.finishLoadmore(2000);//传入false表示加载失败
+                currentPage++;
+                mainPagePresenter.selectDataFromJianDan(currentPage, isFristRefresh);
+            }
+        });
     }
 
 
@@ -70,21 +101,25 @@ public class MainPageFrament extends BaseMVPFragment<MainPageContract.MainPageVi
 
 
     @Override
-    public void setDataToView(ArrayList<String> userInfoList) {
-
-    }
-
-    @Override
     public void okResult(ArrayList<JianDanComment> jianDanList) {
-        linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerViewDuanzi.setLayoutManager(linearLayoutManager);
-        mainPageDuanZiAdapter = new MainPageDuanZiAdapter(getActivity(), jianDanList);
-        recyclerViewDuanzi.setAdapter(mainPageDuanZiAdapter);
+        if (currentPage == 1) {
+            linearLayoutManager = new LinearLayoutManager(getActivity());
+            recyclerViewDuanzi.setLayoutManager(linearLayoutManager);
+            mainPageDuanZiAdapter = new MainPageDuanZiAdapter(getActivity(), jianDanList);
+            recyclerViewDuanzi.setAdapter(mainPageDuanZiAdapter);
+        } else {
+            mainPageDuanZiAdapter.notifyDataSetChanged();
+        }
+
+        duanZiSmartRefreshLayout.finishRefresh();
+        duanZiSmartRefreshLayout.finishLoadmore();
     }
 
     @Override
     public void errorResult(String message) {
-        Toast.makeText(getActivity(),"数据加载失败",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "数据加载失败", Toast.LENGTH_SHORT).show();
+        duanZiSmartRefreshLayout.finishRefresh();
+        duanZiSmartRefreshLayout.finishLoadmore();
     }
 
 }

@@ -5,7 +5,7 @@ android {
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.zp.neihan"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -16,6 +16,18 @@ android {
     dexOptions {
         jumboMode = true
     }
+
+    // 解决 native libraries 不支持cpu的体系结构。允许模拟器调试
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'armeabi-v7a','x86_64'
+            universalApk true
+        }
+    }
+
+
     signingConfigs {
         release {
             try {
@@ -75,7 +87,13 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4'//没有使用特殊Header，可以不加这行
 
+    implementation 'com.kk.taurus.playerbase:playerbase:3.2.9'
+    implementation 'com.jiajunhui.xapp.medialoader:medialoader:1.2.1'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+
+    implementation project(':ijkplayer')
 }

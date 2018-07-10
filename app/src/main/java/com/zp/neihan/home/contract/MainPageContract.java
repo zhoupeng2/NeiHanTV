@@ -29,25 +29,17 @@ public interface MainPageContract {
     public static class MainPagePresenter extends BasePresenter<MainPageContract.MainPageView> {
         private ArrayList<JianDanComment> jianDanCommentList;
 
-        public void getUserInfo(String uid, Context context) {
-
-            /**
-             * 模拟通过用户Id查询用户信息
-             */
-            ArrayList<String> userInfoList = mainPageModel.selectUserInfoById(uid);
-            /**
-             * TODO 2 填充 数据
-             */
-            getView().setDataToView(userInfoList);
-        }
 
         /**
          * 数据来自于 煎蛋
          *
          * @param pageIndex 第几页
          */
-        public void selectDataFromJianDan(int pageIndex) {
-
+        public void selectDataFromJianDan(int pageIndex,boolean isFristRefresh) {
+            if (pageIndex == 1 && isFristRefresh!=true) {
+                jianDanCommentList.clear();
+                jianDanCommentList = null;
+            }
             mainPageModel.selectDataFromJianDan(pageIndex, new ResultCallBack() {
                 @Override
                 public void onPrepare() {
@@ -66,15 +58,19 @@ public interface MainPageContract {
                         Object comments = map.get("comments");
                         if (comments != null) {
                             JSONArray jsons = new JSONArray(comments.toString());
-                            jianDanCommentList = new ArrayList<>();
+                            if(jianDanCommentList==null){
+                                jianDanCommentList = new ArrayList<>();
+                            }
+
                             Gson gs = new Gson();
                             if (jsons != null && jsons.length() > 0) {
                                 for (int i = 0; i < jsons.length(); i++) {
                                     JSONObject json = new JSONObject(jsons.get(i)
                                             .toString());
-                                    JianDanComment coupon = gs.fromJson(
+                                    JianDanComment jianDanComment = gs.fromJson(
                                             json.toString(), JianDanComment.class);
-                                    jianDanCommentList.add(coupon);
+                                        jianDanCommentList.add(jianDanComment);
+
                                 }
                             }
                         }
@@ -105,7 +101,6 @@ public interface MainPageContract {
     }
 
     public interface MainPageView extends BaseMVPView {
-        void setDataToView(ArrayList<String> userInfo);
 
         void okResult(ArrayList<JianDanComment> jianDanList);
 

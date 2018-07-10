@@ -1,9 +1,9 @@
 package com.zp.neihan.home.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.content.pm.ActivityInfo;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -13,14 +13,13 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.zp.neihan.R;
-import com.zp.neihan.base.BaseActivity_NetworkState;
 import com.zp.neihan.base.BaseMVPActivity;
 import com.zp.neihan.base.BasePresenter;
 import com.zp.neihan.home.ui.fragment.MainPageFrament;
 import com.zp.neihan.home.ui.fragment.MyAccountFragment;
-import com.zp.neihan.home.ui.fragment.NeiHanShiPingFragment;
+import com.zp.neihan.utils.CommonString;
+import com.zp.neihan.videopage.ui.fragment.NeiHanShiPingFragment;
 import com.zp.neihan.home.ui.fragment.NeiHanTuPianFragment;
-import com.zp.neihan.utils.AvoidDoubleClickUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -50,6 +49,7 @@ public class MainActivity extends BaseMVPActivity {
     private MyAccountFragment myAccountFragment;
 
     private FragmentManager fragmentManager;
+    public static MainActivity mainActivityInstance = null;
 
     @Override
     protected int setLayoutId() {
@@ -57,7 +57,16 @@ public class MainActivity extends BaseMVPActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mainActivityInstance != null) {
+            mainActivityInstance = null;
+        }
+    }
+
+    @Override
     protected void initView() {
+        mainActivityInstance = this;
         common_top.setVisibility(View.GONE);
         initFirstFragment();
     }
@@ -78,6 +87,7 @@ public class MainActivity extends BaseMVPActivity {
 
         };
     }
+
     //解决重叠
     @SuppressLint("MissingSuperCall")
     @Override
@@ -220,6 +230,7 @@ public class MainActivity extends BaseMVPActivity {
 
 
     private long exitTime;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // 绑定物理返回键
@@ -230,9 +241,14 @@ public class MainActivity extends BaseMVPActivity {
             // ActivityManager.getInstance().cleanAllActivity();
 
             if ((System.currentTimeMillis() - exitTime) > 2000) {
-                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
-                // 记录exitTime
-                exitTime = System.currentTimeMillis();
+                if (CommonString.isLandScape) {
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                } else {
+                    Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                    // 记录exitTime
+                    exitTime = System.currentTimeMillis();
+                }
+
             } else {
                 // 否则退出程序
                 exitApp();
@@ -252,5 +268,14 @@ public class MainActivity extends BaseMVPActivity {
         // ActivityManager.getInstance().exit();
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (CommonString.isLandScape) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            return;
+        }
+        super.onBackPressed();
     }
 }

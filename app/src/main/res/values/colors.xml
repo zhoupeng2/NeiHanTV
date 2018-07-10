@@ -70,4 +70,7 @@
     <color name="android_gray_theme">#F0F4F5</color>
     <!-- APP文字一般用的灰颜色-->
     <color name="main_txt_gray">#8c8d90</color>
+
+    <color name="controller_bg_dark">#66000000</color>
+    <color name="controller_bg_light">#00000000</color>
 </resources>

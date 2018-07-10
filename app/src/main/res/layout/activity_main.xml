@@ -1,96 +1,108 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00000000"
-    android:orientation="vertical">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <FrameLayout
-            android:id="@+id/fragment_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-        <ImageView
-            android:id="@+id/img_yinying"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:src="@drawable/ic_yinying" />
-    </RelativeLayout>
-
+    android:background="#00000000">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:background="#ffffff"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
 
         <RelativeLayout
-            android:id="@+id/rlayout_hot"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <FrameLayout
+                android:id="@+id/fragment_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <ImageView
-                android:id="@+id/hotBtn"
-                android:layout_width="wrap_content"
+                android:id="@+id/img_yinying"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/hot_text_select" />
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/ic_yinying" />
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/rlayout_product"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
 
-            <ImageView
-                android:id="@+id/productBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/product_text_select" />
-        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="#ffffff"
+            android:orientation="horizontal">
 
-        <RelativeLayout
-            android:id="@+id/rlayout_find"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.00"
-            android:gravity="center">
+            <RelativeLayout
+                android:id="@+id/rlayout_hot"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
 
-            <ImageView
-                android:id="@+id/findBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/find_text_select" />
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/hotBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/hot_text_select" />
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/rlayout_mine"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.00"
-            android:gravity="center">
+            <RelativeLayout
+                android:id="@+id/rlayout_product"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
 
-            <ImageView
-                android:id="@+id/myBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/my_text_select" />
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/productBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/product_text_select" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlayout_find"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.00"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/findBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/find_text_select" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlayout_mine"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.00"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/myBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/my_text_select" />
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/listPlayContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</RelativeLayout>
