@@ -84,8 +84,8 @@ dependencies {
      */
     implementation 'com.android.support:design:27.1.1'//版本随意（非必须，引用可以解决无法预览问题）
     implementation 'com.android.support:appcompat-v7:27.1.1'//版本随意
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.4'//没有使用特殊Header，可以不加这行
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.5.1'//没有使用特殊Header，可以不加这行
 
     implementation 'com.kk.taurus.playerbase:playerbase:3.2.9'
     implementation 'com.jiajunhui.xapp.medialoader:medialoader:1.2.1'

@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zp.neihan.R;
 import com.zp.neihan.base.BaseMVPFragment;
@@ -58,7 +58,7 @@ public class MainPageFrament extends BaseMVPFragment<MainPageContract.MainPageVi
     @Override
     protected void initView() {
         showLoadingView();
-      mainPagePresenter.selectDataFromJianDan(currentPage,isFristRefresh);
+        mainPagePresenter.selectDataFromJianDan(currentPage, isFristRefresh);
         customShowCotentView(800);
     }
 
@@ -70,7 +70,7 @@ public class MainPageFrament extends BaseMVPFragment<MainPageContract.MainPageVi
     @Override
     protected void initEvent() {
 
-        isFristRefresh=false;
+        isFristRefresh = false;
 
         duanZiSmartRefreshLayout.setDisableContentWhenRefresh(true);//是否在刷新的时候禁止列表的操作
         duanZiSmartRefreshLayout.setDisableContentWhenLoading(true);//是否在加载的时候禁止列表的操作
@@ -82,14 +82,15 @@ public class MainPageFrament extends BaseMVPFragment<MainPageContract.MainPageVi
                 //  refreshlayout.finishRefresh(/*,false*/);//传入false表示刷新失败
             }
         });
-        duanZiSmartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+        duanZiSmartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-                //   refreshlayout.finishLoadmore(2000);//传入false表示加载失败
+            public void onLoadMore(RefreshLayout refreshLayout) {
                 currentPage++;
                 mainPagePresenter.selectDataFromJianDan(currentPage, isFristRefresh);
+                //   refreshlayout.finishLoadmore(2000);//传入false表示加载失败
             }
         });
+
     }
 
 
@@ -112,7 +113,7 @@ public class MainPageFrament extends BaseMVPFragment<MainPageContract.MainPageVi
         }
 
         duanZiSmartRefreshLayout.finishRefresh();
-        duanZiSmartRefreshLayout.finishLoadmore();
+        duanZiSmartRefreshLayout.finishLoadMore();
     }
 
     @Override
