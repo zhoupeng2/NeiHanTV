@@ -59,9 +59,30 @@ public class DataUtils {
         List<VideoBean> videoList = new ArrayList<>();
 
         videoList.add(new VideoBean(
-                "坚持与放弃",
+                "各位观众，我就是赌 …… …… 圣",
                 "http://open-image.nosdn.127.net/image/snapshot_movie/2016/11/0/4/e4c8836bfe154d76a808da38d0733304.jpg",
-                "https://mov.bn.netease.com/open-movie/nos/mp4/2015/08/27/SB13F5AGJ_sd.mp4"));
+                "https://gss3.baidu.com/6LZ0ej3k1Qd3ote6lo7D0j9wehsv/tieba-smallvideo-transcode/26745284_d941eab8771bc5a82a8aa0fb0db90c34_3.mp4"));
+
+        videoList.add(new VideoBean(
+                "电瓶车被偷了，哈哈",
+                "http://open-image.nosdn.127.net/57baaaeaad4e4fda8bdaceafdb9d45c2.jpg",
+                "https://gss3.baidu.com/6LZ0ej3k1Qd3ote6lo7D0j9wehsv/tieba-smallvideo/27_c9d3f9b019fd8640bae6c18fdbc2457d.mp4"));
+        videoList.add(new VideoBean(
+                "打工是不可能打工的",
+                "http://open-image.nosdn.127.net/57baaaeaad4e4fda8bdaceafdb9d45c2.jpg",
+                "https://gss3.baidu.com/6LZ0ej3k1Qd3ote6lo7D0j9wehsv/tieba-movideo/2368587_5c8cee447f57ba3cf2a6c357b2421287_cadc4aba9aa0.mp4"));
+        videoList.add(new VideoBean(
+                "嘿嘿嘿",
+                "http://open-image.nosdn.127.net/57baaaeaad4e4fda8bdaceafdb9d45c2.jpg",
+                "https://gss3.baidu.com/6LZ0ej3k1Qd3ote6lo7D0j9wehsv/tieba-smallvideo-transcode/8181270_10b023211c10e2f7d4c618581fb1bda3_0.mp4"));
+        videoList.add(new VideoBean(
+                "这锁啦吹得很6",
+                "http://open-image.nosdn.127.net/57baaaeaad4e4fda8bdaceafdb9d45c2.jpg",
+                "https://gss3.baidu.com/6LZ0ej3k1Qd3ote6lo7D0j9wehsv/tieba-smallvideo-transcode/23491834_1a2e3cbdb5b0fbbb4000740001abccde_2.mp4"));
+        videoList.add(new VideoBean(
+                "我现在没心情听什么狗屁浪漫爱情故事",
+                "http://open-image.nosdn.127.net/57baaaeaad4e4fda8bdaceafdb9d45c2.jpg",
+                "https://gss3.baidu.com/6LZ0ej3k1Qd3ote6lo7D0j9wehsv/tieba-smallvideo-transcode/848365_82ef193e183641a87a04a399d7ec2377_3.mp4"));
 
         videoList.add(new VideoBean(
                 "不想从被子里出来",
@@ -72,7 +93,7 @@ public class DataUtils {
                 "http://open-image.nosdn.127.net/image/snapshot_movie/2016/11/b/a/c36e048e284c459686133e66a79e2eba.jpg",
                 "https://mov.bn.netease.com/open-movie/nos/mp4/2016/06/22/SBP8G92E3_hd.mp4"));
 
-        /*videoList.add(new VideoBean(
+        videoList.add(new VideoBean(
                 "不耐烦的中国人?",
                 "http://open-image.nosdn.127.net/image/snapshot_movie/2016/11/e/9/ac655948c705413b8a63a7aaefd4cde9.jpg",
                 "https://mov.bn.netease.com/open-movie/nos/mp4/2017/05/31/SCKR8V6E9_hd.mp4"));
@@ -95,7 +116,7 @@ public class DataUtils {
         videoList.add(new VideoBean(
                 "音乐和艺术如何改变世界",
                 "http://open-image.nosdn.127.net/image/snapshot_movie/2017/12/2/8/f30dd5f2f09c405c98e7eb6c06c89928.jpg",
-                "https://mov.bn.netease.com/open-movie/nos/mp4/2017/12/04/SD3SUEFFQ_hd.mp4"));*/
+                "https://mov.bn.netease.com/open-movie/nos/mp4/2017/12/04/SD3SUEFFQ_hd.mp4"));
 
         return videoList;
     }

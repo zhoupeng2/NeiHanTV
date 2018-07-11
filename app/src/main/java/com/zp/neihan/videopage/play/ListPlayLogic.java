@@ -78,13 +78,16 @@ public class ListPlayLogic {
     }
 
     public void attachPlay() {
-        Log.d("ListPlayLogic", "mPlayPosition 值为：" + mPlayPosition);
-        VideoListAdapter.VideoItemHolder itemHolder = getItemHolder(mPlayPosition);
-
-        if (itemHolder != null) {
-            PLog.d("ListPlayLogic", "attachPlay...");
-            AssistPlayer.get().play(itemHolder.layoutContainer, null);
-        }
+        mRecycler.post(new Runnable() {
+            @Override
+            public void run() {
+                VideoListAdapter.VideoItemHolder itemHolder = getItemHolder(mPlayPosition);
+                if (itemHolder != null) {
+                    PLog.d("ListPlayLogic", "attachPlay...");
+                    AssistPlayer.get().play(itemHolder.layoutContainer, null);
+                }
+            }
+        });
     }
 
     public void playPosition(int position) {
@@ -108,8 +111,8 @@ public class ListPlayLogic {
 
         // RecyclerView.ViewHolder viewHolder = mRecycler.findViewHolderForItemId(position);
         // RecyclerView.ViewHolder viewHolder = mRecycler.findViewHolderForPosition(position);
-        // RecyclerView.ViewHolder viewHolder = mRecycler.findViewHolderForAdapterPosition(position);
-        RecyclerView.ViewHolder viewHolder = mRecycler.findViewHolderForLayoutPosition(position);
+         RecyclerView.ViewHolder viewHolder = mRecycler.findViewHolderForAdapterPosition(position);
+   //     RecyclerView.ViewHolder viewHolder = mRecycler.findViewHolderForLayoutPosition(position);
 
 
         if (viewHolder != null && viewHolder instanceof VideoListAdapter.VideoItemHolder) {
