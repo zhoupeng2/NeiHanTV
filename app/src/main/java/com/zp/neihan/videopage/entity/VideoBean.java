@@ -4,11 +4,12 @@ import java.io.Serializable;
 
 public class VideoBean implements Serializable {
 
-    private String displayName;
-    private String cover;
-    private String path;
+    public String displayName;
+    public String cover;
+    public String path;
 
     public VideoBean() {
+
     }
 
     public VideoBean(String displayName, String cover, String path) {

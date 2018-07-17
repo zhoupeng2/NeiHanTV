@@ -7,6 +7,7 @@
     <!-- 灰色 -->
     <color name="gray">#efefef</color>
     <color name="white">#ffffff</color>
+    <color name="base_F2F2F2">#f2f2f2</color>
     <!-- listview 分割线 -->
     <color name="line_gray">#DCDCDC</color>
     <!-- 深灰色 -->

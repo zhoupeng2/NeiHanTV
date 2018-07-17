@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.zp.neihan.R;
 import com.zp.neihan.home.entity.JianDanComment;
+import com.zp.neihan.recommend.adapter.RecommendAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,11 +50,11 @@ public class MainPageDuanZiAdapter extends RecyclerView.Adapter<MainPageDuanZiAd
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView tv_username, txt_duanzi_content;
+        private TextView txt_contributor_name, txt_duanzi_content;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            tv_username = (TextView) itemView.findViewById(R.id.tv_username);
+            txt_contributor_name = (TextView) itemView.findViewById(R.id.txt_contributor_name);
             txt_duanzi_content = (TextView) itemView.findViewById(R.id.txt_duanzi_content);
         }
     }

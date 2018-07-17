@@ -1,11 +1,14 @@
 package com.zp.neihan.base;
 
 import android.app.Application;
+import android.content.Context;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.kk.taurus.ijkplayer.IjkPlayer;
 import com.kk.taurus.playerbase.config.PlayerConfig;
 import com.kk.taurus.playerbase.config.PlayerLibrary;
 import com.kk.taurus.playerbase.entity.DecoderPlan;
+import com.zp.neihan.R;
 
 /**
  * @CreatedDate 2018/7/3
@@ -17,16 +20,22 @@ public class MyApplication extends Application {
     public static final int PLAN_ID_IJK = 1;
 
     private static MyApplication instance;
-
+    public static Context sContext;
     public static boolean ignoreMobile;
 
-    public static MyApplication get(){
+
+    public static MyApplication get() {
         return instance;
     }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        sContext = getApplicationContext();
         instance = this;
+
+
+
         //...
         //如果您想使用默认的网络状态事件生产者，请添加此行配置。
         //并需要添加权限 android.permission.ACCESS_NETWORK_STATE

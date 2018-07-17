@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/shape_item_white_bg"
     android:orientation="vertical">
-
+    <!-- android:background="@drawable/shape_item_white_bg"-->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="56dp"
@@ -23,7 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:text="司徒维佳"
+            android:text="金牛座"
+            android:textColor="#757575"
             android:textSize="16dp" />
     </LinearLayout>
 
@@ -34,18 +35,27 @@
         android:lineSpacingExtra="3dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:text="感觉这届世界杯的一个魔咒，就是哪支队里面有接拍过中国品牌的广告的球员存在，哪支就被淘汰，梅西的某牛，c罗的某洗发水，接下来是不是就是内马尔了。"
+        android:text="#搞笑视频#信息量大，社会我发姐,3年前就是预言帝!"
         android:textColor="@color/black"
         android:textSize="17dp" />
 
+    <com.zp.neihan.view.NineGridView
+        android:id="@+id/nine_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="15dp" />
+
     <RelativeLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/shape_item_gray_bg">
+        android:background="@drawable/shape_item_gray_bg"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -53,13 +63,14 @@
             android:layout_centerInParent="true"
             android:src="@drawable/ic_shenping" />
 
-        <com.zp.neihan.view.CircleImageView
+        <ImageView
             android:id="@+id/img_shenping"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="center"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="10dp"
+            android:scaleType="fitXY"
             android:src="@drawable/icon" />
 
         <TextView
@@ -110,6 +121,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="43dp">
 
@@ -138,6 +150,7 @@
                 android:layout_toRightOf="@+id/iv_like"
                 android:gravity="center"
                 android:text="8888"
+                android:textColor="#757575"
                 android:textSize="14dp" />
         </LinearLayout>
 
@@ -167,6 +180,7 @@
                 android:layout_toRightOf="@+id/iv_boring"
                 android:gravity="center"
                 android:text="435"
+                android:textColor="#757575"
                 android:textSize="14dp" />
         </LinearLayout>
 
@@ -197,6 +211,7 @@
                 android:layout_toRightOf="@+id/iv_content_comm"
                 android:gravity="center"
                 android:text="2852"
+                android:textColor="#757575"
                 android:textSize="14dp" />
         </LinearLayout>
 
@@ -217,6 +232,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:text="566"
+                android:textColor="#757575"
                 android:textSize="14dp" />
 
             <ImageView

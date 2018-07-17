@@ -9,8 +9,11 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.zp.neihan.R;
+import com.zp.neihan.base.MyApplication;
 import com.zp.neihan.home.ui.activity.MainActivity;
+import com.zp.neihan.utils.CommonUtil;
 
 import java.lang.ref.WeakReference;
 
@@ -40,13 +43,16 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         bind = ButterKnife.bind(this);
 
+        RequestOptions glideOptins = new RequestOptions()
+                .placeholder(R.drawable.ic_splash)    //加载成功之前占位图
+                .error(R.mipmap.ic_launcher)    //加载错误之后的错误图
+                .centerCrop();
         /**
          * 活动图
          */
         Glide.with(this)
                 .load("http://ojyz0c8un.bkt.clouddn.com/b_1.jpg")
-                .placeholder(R.drawable.ic_splash)
-                .error(R.drawable.ic_splash)
+                .apply(glideOptins)
                 .into(imgSplashAdvertising);
 
 

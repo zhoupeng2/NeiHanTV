@@ -19,7 +19,7 @@ import com.zp.neihan.home.ui.fragment.MainPageFrament;
 import com.zp.neihan.home.ui.fragment.MyAccountFragment;
 import com.zp.neihan.utils.CommonString;
 import com.zp.neihan.videopage.ui.fragment.NeiHanShiPingFragment;
-import com.zp.neihan.home.ui.fragment.NeiHanTuPianFragment;
+import com.zp.neihan.recommend.ui.fragment.RecommendFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -44,7 +44,7 @@ public class MainActivity extends BaseMVPActivity {
     @BindView(R.id.rlayout_mine)
     RelativeLayout rlayout_mine;
     private MainPageFrament mainPageFrament;
-    private NeiHanTuPianFragment neiHanTuPianFragment;
+    private RecommendFragment neiHanTuPianFragment;
     private NeiHanShiPingFragment neiHanShiPingFragment;
     private MyAccountFragment myAccountFragment;
 
@@ -137,7 +137,7 @@ public class MainActivity extends BaseMVPActivity {
         onTabSelect(2);
         FragmentTransaction ft = restoreState();
         if (neiHanTuPianFragment == null) {
-            neiHanTuPianFragment = NeiHanTuPianFragment.newInstance();
+            neiHanTuPianFragment = RecommendFragment.newInstance();
             ft.add(R.id.fragment_content, neiHanTuPianFragment);
         }
         ft.show(neiHanTuPianFragment).commit();

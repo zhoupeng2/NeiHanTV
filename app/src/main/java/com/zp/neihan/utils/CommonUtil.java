@@ -23,6 +23,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.request.RequestOptions;
+import com.zp.neihan.R;
+
 import org.apache.http.params.CoreConnectionPNames;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,7 +57,6 @@ public class CommonUtil {
     private Resources resource;
 
     private static String TAG = "CommonUtil";
-
 
 
     /**
@@ -185,10 +187,10 @@ public class CommonUtil {
             return (format.format(((num1 / 100000000))) + "亿");
         } /*
          * else if (num1 >= 10000000) { return (format.format((num1 / 10000000))
-		 * + "千万"); } else if (num1 >= 1000000) { return (format.format((num1 /
-		 * 1000000)) + "百万"); } else if (num1 >= 100000) { return
-		 * (format.format((num1 / 100000)) + "十万"); }
-		 */ else if (num1 >= 10000) {
+         * + "千万"); } else if (num1 >= 1000000) { return (format.format((num1 /
+         * 1000000)) + "百万"); } else if (num1 >= 100000) { return
+         * (format.format((num1 / 100000)) + "十万"); }
+         */ else if (num1 >= 10000) {
             return (format.format((num1 / 10000)) + "万");
         } else {
             return (num1.intValue() + "");
@@ -457,9 +459,9 @@ public class CommonUtil {
                 Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         /*
          * // 设置指定位置textview的背景颜色 style.setSpan(new
-		 * BackgroundColorSpan(Color.RED), 2,
-		 * 5,Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
-		 */
+         * BackgroundColorSpan(Color.RED), 2,
+         * 5,Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+         */
         return (style);
     }
 
@@ -757,7 +759,6 @@ public class CommonUtil {
     }
 
 
-
     /**
      * 返回当前页面名称
      */
@@ -994,5 +995,13 @@ public class CommonUtil {
     public static String ValueFilter(String value) {
 
         return change2Money(Double.parseDouble(value));
+    }
+
+    public static RequestOptions getGlideOptions() {
+        RequestOptions glideOptins = new RequestOptions()
+                .placeholder(R.mipmap.ic_launcher)    //加载成功之前占位图
+                .error(R.mipmap.ic_launcher)    //加载错误之后的错误图
+                .centerCrop();
+        return glideOptins;
     }
 }

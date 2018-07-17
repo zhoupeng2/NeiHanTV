@@ -11,6 +11,8 @@ import com.zp.neihan.videopage.adapter.VideoListAdapter;
 import com.zp.neihan.videopage.entity.VideoBean;
 import com.zp.neihan.videopage.utils.PUtil;
 
+import java.util.List;
+
 /**
  * Created by Taurus on 2018/4/15.
  */
@@ -19,17 +21,19 @@ public class ListPlayLogic {
 
     private Context mContext;
     private RecyclerView mRecycler;
-    private VideoListAdapter mAdapter;
+    private RecyclerView.Adapter mAdapter;
 
     private int mScreenH;
 
     private int mPlayPosition = -1;
     private int mVerticalRecyclerStart;
+    private List<VideoBean> videoList;
 
-    public ListPlayLogic(Context context, RecyclerView recycler, VideoListAdapter adapter) {
+    public ListPlayLogic(Context context, RecyclerView recycler, RecyclerView.Adapter adapter, List videoList) {
         this.mContext = context;
         this.mRecycler = recycler;
         this.mAdapter = adapter;
+        this.videoList = videoList;
         init();
     }
 
@@ -91,9 +95,11 @@ public class ListPlayLogic {
     }
 
     public void playPosition(int position) {
+        VideoBean item = null;
 
+        if (videoList != null)
+            item = videoList.get(position);
 
-        VideoBean item = getItem(position);
         DataSource dataSource = new DataSource(item.getPath());
         dataSource.setTitle(item.getDisplayName());
         VideoListAdapter.VideoItemHolder holder = getItemHolder(position);
@@ -103,16 +109,13 @@ public class ListPlayLogic {
         }
     }
 
-    private VideoBean getItem(int position) {
-        return mAdapter.getItem(position);
-    }
 
     private VideoListAdapter.VideoItemHolder getItemHolder(int position) {
 
         // RecyclerView.ViewHolder viewHolder = mRecycler.findViewHolderForItemId(position);
         // RecyclerView.ViewHolder viewHolder = mRecycler.findViewHolderForPosition(position);
-         RecyclerView.ViewHolder viewHolder = mRecycler.findViewHolderForAdapterPosition(position);
-   //     RecyclerView.ViewHolder viewHolder = mRecycler.findViewHolderForLayoutPosition(position);
+        RecyclerView.ViewHolder viewHolder = mRecycler.findViewHolderForAdapterPosition(position);
+        //     RecyclerView.ViewHolder viewHolder = mRecycler.findViewHolderForLayoutPosition(position);
 
 
         if (viewHolder != null && viewHolder instanceof VideoListAdapter.VideoItemHolder) {
