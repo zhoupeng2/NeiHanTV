@@ -9,7 +9,7 @@ import java.util.List;
  * @author ZP
  * @CreatedDate 2018/7/13
  */
-public class RecommendEntity extends VideoBean{
+public class RecommendEntity {
     /**
      * 投稿人 名字
      */

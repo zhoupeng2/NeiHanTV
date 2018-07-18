@@ -105,4 +105,9 @@
         android:id="@+id/listPlayContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <ch.ielse.view.imagewatcher.ImageWatcher
+        android:id="@+id/image_watcher"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>

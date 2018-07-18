@@ -1,7 +1,6 @@
 package com.zp.neihan.videopage.adapter;
 
 import android.content.Context;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.zp.neihan.R;
-import com.zp.neihan.base.MyApplication;
+import com.zp.neihan.recommend.adapter.RecommendAdapter;
 import com.zp.neihan.utils.CommonUtil;
 import com.zp.neihan.videopage.entity.VideoBean;
 import com.zp.neihan.videopage.play.ListPlayLogic;
@@ -51,12 +50,12 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Vide
     }
 
     @Override
-    public VideoItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new VideoItemHolder(View.inflate(mContext, R.layout.recyclerview_item_neihan_video, null));
+    public VideoListAdapter.VideoItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new VideoListAdapter.VideoItemHolder(View.inflate(mContext, R.layout.recyclerview_item_neihan_video, null));
     }
 
     @Override
-    public void onBindViewHolder(final VideoItemHolder holder, final int position) {
+    public void onBindViewHolder(final VideoListAdapter.VideoItemHolder holder, final int position) {
         //     ViewCompat.setElevation(holder.card, PUtil.dip2px(mContext, 3));
         updateWH(holder);
         final VideoBean item = getItem(position);
@@ -80,6 +79,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Vide
                 mListPlayLogic.playPosition(position);
             }
         });
+
         if (onListListener != null) {
             holder.txt_duanzi_content.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -91,7 +91,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Vide
         }
     }
 
-    private void updateWH(VideoItemHolder holder) {
+    private void updateWH(VideoListAdapter.VideoItemHolder holder) {
         ViewGroup.LayoutParams layoutParams = holder.layoutBox.getLayoutParams();
         layoutParams.width = mScreenUseW;
         layoutParams.height = mScreenUseW * 9 / 16;
@@ -115,14 +115,14 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Vide
         return mItems.size();
     }
 
-    public static class VideoItemHolder extends RecyclerView.ViewHolder {
+    public static class VideoItemHolder extends RecommendAdapter.BaseNeiHanViewHolder {
 
         //   View card;
         public FrameLayout layoutContainer;
         public RelativeLayout layoutBox;
-        View albumLayout;
-        ImageView albumImage;
-        TextView txt_duanzi_content;
+        public View albumLayout;
+        public ImageView albumImage;
+        public TextView txt_duanzi_content;
 
         public VideoItemHolder(View itemView) {
             super(itemView);

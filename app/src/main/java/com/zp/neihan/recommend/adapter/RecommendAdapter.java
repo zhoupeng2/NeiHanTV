@@ -11,22 +11,21 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.zp.neihan.R;
-import com.zp.neihan.recommend.entity.RecommendEntity;
 import com.zp.neihan.utils.CommonUtil;
 import com.zp.neihan.videopage.adapter.VideoListAdapter;
 import com.zp.neihan.videopage.entity.VideoBean;
 import com.zp.neihan.videopage.play.ListPlayLogic;
-import com.zp.neihan.videopage.ui.fragment.NeiHanShiPingFragment;
 import com.zp.neihan.videopage.utils.PUtil;
 import com.zp.neihan.view.NineGridView;
 
 import java.util.ArrayList;
+
+import ch.ielse.view.imagewatcher.ImageWatcher;
 
 /**
  * @author ZP
@@ -35,7 +34,7 @@ import java.util.ArrayList;
 public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.BaseNeiHanViewHolder> {
     private Context context;
     private LayoutInflater mLayoutInflater;
-    private ArrayList<RecommendEntity> recommendEntityArrayList;
+    private ArrayList<VideoBean> recommendEntityArrayList;
 
 
     /**
@@ -43,29 +42,31 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Base
      */
     private ListPlayLogic mListPlayLogic;
     private int mScreenUseW;
+    private ImageWatcher mImageWatcher;
     /**
      * Glide图片加载配置参数
      */
     private RequestOptions mRequestOptions;
     private DrawableTransitionOptions mDrawableTransitionOptions;
 
-    public RecommendAdapter(Context context, ArrayList<RecommendEntity> recommendEntityArrayList,RecyclerView recyclerView) {
+    public RecommendAdapter(Context context, ArrayList<VideoBean> recommendEntityArrayList, RecyclerView recyclerView, ImageWatcher mImageWatcher) {
         this.context = context;
         this.recommendEntityArrayList = recommendEntityArrayList;
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mRequestOptions = new RequestOptions().centerCrop();
         this.mDrawableTransitionOptions = DrawableTransitionOptions.withCrossFade();
+        this.mImageWatcher=mImageWatcher;
         mScreenUseW = PUtil.getScreenW(context);
         mListPlayLogic = new ListPlayLogic(context, recyclerView, this,recommendEntityArrayList);
     }
 
     @NonNull
     @Override
-    public RecommendAdapter.BaseNeiHanViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BaseNeiHanViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == 0) {
             return new NeiHanDuanZiViewHolder(mLayoutInflater.inflate(R.layout.recyclerview_item_neihan_duanzi, parent, false));
         } else if (viewType == 1) {
-            return new NeiHanDuanVideoHolder(mLayoutInflater.inflate(R.layout.recyclerview_item_neihan_video, parent, false));
+            return new VideoListAdapter.VideoItemHolder(mLayoutInflater.inflate(R.layout.recyclerview_item_neihan_video, parent, false));
         } else if (viewType == 2) {
             return new NeiHanTextAndImagesViewHolder(mLayoutInflater.inflate(R.layout.recyclerview_item_neihan_txt_imgs, parent, false));
         }
@@ -73,9 +74,9 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Base
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecommendAdapter.BaseNeiHanViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull BaseNeiHanViewHolder holder, final int position) {
         if (holder != null && recommendEntityArrayList != null && position < recommendEntityArrayList.size()) {
-            RecommendEntity recommendEntity = recommendEntityArrayList.get(position);
+            final VideoBean recommendEntity = recommendEntityArrayList.get(position);
             /**
              *  投稿人名字
              */
@@ -87,8 +88,8 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Base
 
             if (holder instanceof NeiHanDuanZiViewHolder) {
                 NeiHanDuanZiViewHolder neiHanDuanZiViewHolder = (NeiHanDuanZiViewHolder) holder;
-            } else if (holder instanceof NeiHanDuanVideoHolder) {
-                NeiHanDuanVideoHolder neiHanDuanVideoHolder = (NeiHanDuanVideoHolder) holder;
+            } else if (holder instanceof  VideoListAdapter.VideoItemHolder) {
+                VideoListAdapter.VideoItemHolder neiHanDuanVideoHolder = ( VideoListAdapter.VideoItemHolder) holder;
 
                 updateWH(neiHanDuanVideoHolder);
                 if (TextUtils.isEmpty(recommendEntity.getCover())) {
@@ -111,7 +112,14 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Base
                     }
                 });
             } else if (holder instanceof NeiHanTextAndImagesViewHolder) {
-                NeiHanTextAndImagesViewHolder wordAndImagesViewHolder = (NeiHanTextAndImagesViewHolder) holder;
+                final NeiHanTextAndImagesViewHolder wordAndImagesViewHolder = (NeiHanTextAndImagesViewHolder) holder;
+                wordAndImagesViewHolder.nineGridView.setOnImageClickListener(new NineGridView.OnImageClickListener() {
+                    @Override
+                    public void onImageClick(int position, View view) {
+                        mImageWatcher.show((ImageView) view, wordAndImagesViewHolder.nineGridView.getImageViews(),
+                                recommendEntity.getImageUrls());
+                    }
+                });
                 wordAndImagesViewHolder.nineGridView.setAdapter(new NineImageAdapter(context, mRequestOptions,
                         mDrawableTransitionOptions, recommendEntity.getImageUrls()));
             }
@@ -128,20 +136,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Base
         return recommendEntityArrayList.get(position).getContributeType();
     }
 
-    /**
-     * 多种类型适配 RecylerView  父ViewHolder
-     */
-    public static class BaseNeiHanViewHolder extends RecyclerView.ViewHolder {
-        public TextView txt_contributor_name;
-        private TextView txt_duanzi_content;
 
-        public BaseNeiHanViewHolder(View itemView) {
-            super(itemView);
-            txt_contributor_name = itemView.findViewById(R.id.txt_contributor_name);
-            txt_duanzi_content = itemView.findViewById(R.id.txt_duanzi_content);
-        }
-
-    }
 
     /**
      * 多种类型适配 RecylerView  段子纯文字类型
@@ -187,6 +182,19 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Base
         }
     }
 
+
+    public static class BaseNeiHanViewHolder extends RecyclerView.ViewHolder {
+        public TextView txt_contributor_name;
+        public TextView txt_duanzi_content;
+
+        public BaseNeiHanViewHolder(View itemView) {
+            super(itemView);
+            txt_contributor_name = itemView.findViewById(R.id.txt_contributor_name);
+            txt_duanzi_content = itemView.findViewById(R.id.txt_duanzi_content);
+        }
+    }
+
+
     /**
      * 视频item部分
      */
@@ -196,7 +204,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Base
     /**
      * 视频item部分
      */
-    private void updateWH(NeiHanDuanVideoHolder holder) {
+    private void updateWH( VideoListAdapter.VideoItemHolder holder) {
         ViewGroup.LayoutParams layoutParams = holder.layoutBox.getLayoutParams();
         layoutParams.width = mScreenUseW;
         layoutParams.height = mScreenUseW * 9 / 16;

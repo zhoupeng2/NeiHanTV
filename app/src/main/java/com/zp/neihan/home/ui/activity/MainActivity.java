@@ -1,10 +1,12 @@
 package com.zp.neihan.home.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.zp.neihan.R;
 import com.zp.neihan.base.BaseMVPActivity;
 import com.zp.neihan.base.BasePresenter;
@@ -20,11 +23,13 @@ import com.zp.neihan.home.ui.fragment.MyAccountFragment;
 import com.zp.neihan.utils.CommonString;
 import com.zp.neihan.videopage.ui.fragment.NeiHanShiPingFragment;
 import com.zp.neihan.recommend.ui.fragment.RecommendFragment;
+import com.zp.neihan.videopage.utils.GlideSimpleTarget;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import ch.ielse.view.imagewatcher.ImageWatcher;
 
-public class MainActivity extends BaseMVPActivity {
+public class MainActivity extends BaseMVPActivity implements ImageWatcher.OnPictureLongPressListener, ImageWatcher.Loader {
     @BindView(R.id.fragment_content)
     FrameLayout fragmentContent;
     @BindView(R.id.hotBtn)
@@ -44,9 +49,12 @@ public class MainActivity extends BaseMVPActivity {
     @BindView(R.id.rlayout_mine)
     RelativeLayout rlayout_mine;
     private MainPageFrament mainPageFrament;
-    private RecommendFragment neiHanTuPianFragment;
+    private RecommendFragment recommendFragment;
     private NeiHanShiPingFragment neiHanShiPingFragment;
     private MyAccountFragment myAccountFragment;
+
+    @BindView(R.id.image_watcher)
+    ImageWatcher imageWatcher;
 
     private FragmentManager fragmentManager;
     public static MainActivity mainActivityInstance = null;
@@ -56,18 +64,15 @@ public class MainActivity extends BaseMVPActivity {
         return R.layout.activity_main;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mainActivityInstance != null) {
-            mainActivityInstance = null;
-        }
-    }
 
     @Override
     protected void initView() {
         mainActivityInstance = this;
         common_top.setVisibility(View.GONE);
+        imageWatcher.setTranslucentStatus(getStatusBarHeight());
+        imageWatcher.setErrorImageRes(R.mipmap.error_picture);
+        imageWatcher.setOnPictureLongPressListener(this);
+        imageWatcher.setLoader(this);
         initFirstFragment();
     }
 
@@ -102,11 +107,10 @@ public class MainActivity extends BaseMVPActivity {
         switch (view.getId()) {
             case R.id.rlayout_hot:
 
-                clickMainPageFragment();
+                clickNeiHanTuPianFragment();
                 break;
             case R.id.rlayout_product:
-
-                clickNeiHanTuPianFragment();
+                clickMainPageFragment();
                 break;
             case R.id.rlayout_find:
 
@@ -121,7 +125,7 @@ public class MainActivity extends BaseMVPActivity {
 
     // 到热门推荐
     private void clickMainPageFragment() {
-        onTabSelect(1);
+        onTabSelect(2);
         FragmentTransaction ft = restoreState();
         if (mainPageFrament == null) {
             mainPageFrament = MainPageFrament.newInstance();
@@ -134,13 +138,13 @@ public class MainActivity extends BaseMVPActivity {
 
     // 到产品列表
     private void clickNeiHanTuPianFragment() {
-        onTabSelect(2);
+        onTabSelect(1);
         FragmentTransaction ft = restoreState();
-        if (neiHanTuPianFragment == null) {
-            neiHanTuPianFragment = RecommendFragment.newInstance();
-            ft.add(R.id.fragment_content, neiHanTuPianFragment);
+        if (recommendFragment == null) {
+            recommendFragment = RecommendFragment.newInstance();
+            ft.add(R.id.fragment_content, recommendFragment);
         }
-        ft.show(neiHanTuPianFragment).commit();
+        ft.show(recommendFragment).commit();
 
     }
 
@@ -171,9 +175,9 @@ public class MainActivity extends BaseMVPActivity {
     private void initFirstFragment() {
         onTabSelect(1);
         fragmentManager = getSupportFragmentManager();
-        mainPageFrament = MainPageFrament.newInstance();
+        recommendFragment = RecommendFragment.newInstance();
         fragmentManager.beginTransaction()
-                .add(R.id.fragment_content, mainPageFrament).commit();
+                .add(R.id.fragment_content, recommendFragment).commit();
     }
 
     private FragmentTransaction restoreState() {
@@ -182,8 +186,8 @@ public class MainActivity extends BaseMVPActivity {
             ft.hide(mainPageFrament);
         }
 
-        if (neiHanTuPianFragment != null) {
-            ft.hide(neiHanTuPianFragment);
+        if (recommendFragment != null) {
+            ft.hide(recommendFragment);
         }
         if (neiHanShiPingFragment != null) {
             ft.hide(neiHanShiPingFragment);
@@ -236,24 +240,23 @@ public class MainActivity extends BaseMVPActivity {
         // 绑定物理返回键
 
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-            // creatDialog();
-            // 如果两次按键时间间隔大于2000毫秒，则不退出
-            // ActivityManager.getInstance().cleanAllActivity();
 
-            if ((System.currentTimeMillis() - exitTime) > 2000) {
-                if (CommonString.isLandScape) {
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                } else {
-                    Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
-                    // 记录exitTime
-                    exitTime = System.currentTimeMillis();
-                }
+               if(!imageWatcher.handleBackPressed()){
+                   if ((System.currentTimeMillis() - exitTime) > 2000) {
+                       if (CommonString.isLandScape) {
+                           setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                       } else {
+                           Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                           // 记录exitTime
+                           exitTime = System.currentTimeMillis();
+                           // }
+                       }
 
-            } else {
-                // 否则退出程序
-                exitApp();
-            }
-
+                   } else {
+                       // 否则退出程序
+                       exitApp();
+                   }
+               }
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -272,10 +275,33 @@ public class MainActivity extends BaseMVPActivity {
 
     @Override
     public void onBackPressed() {
-        if (CommonString.isLandScape) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            return;
-        }
         super.onBackPressed();
+    }
+
+
+    public ImageWatcher getImageWatcher() {
+        return imageWatcher;
+    }
+
+    public void setImageWatcher(ImageWatcher imageWatcher) {
+        this.imageWatcher = imageWatcher;
+    }
+
+    @Override
+    public void load(Context context, String url, ImageWatcher.LoadCallback lc) {
+        Glide.with(context).asBitmap().load(url).into(new GlideSimpleTarget(lc));
+    }
+
+    @Override
+    public void onPictureLongPress(ImageView v, String url, int pos) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mainActivityInstance != null) {
+            mainActivityInstance = null;
+        }
     }
 }
